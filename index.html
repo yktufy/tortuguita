@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Relógio e Carrossel de Fotos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #e0f7fa;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    #clock {
+      font-family: 'Courier New', monospace;
+      font-size: 4rem;
+      color: #00796b;
+      margin-bottom: 20px;
+    }
+    #carousel {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+    #carousel img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: none;
+    }
+    #carousel img.active {
+      display: block;
+    }
+    .btn {
+      margin: 10px 5px 0 5px;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #00796b;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="clock">00:00:00</div>
+
+  <h2>Carrossel de Fotos</h2>
+
+  <div id="carousel">
+    <img src="foto1.jpeg" alt="Foto 1" class="active" />
+    <img src="foto2.jpeg" alt="Foto 2" />
+    <img src="foto3.jpeg" alt="Foto 3" />
+    <img src="foto4.jpeg" alt="Foto 4" />
+  </div>
+
+  <div>
+    <button class="btn" id="prevBtn">Anterior</button>
+    <button class="btn" id="nextBtn">Próximo</button>
+  </div>
+
+  <script>
+    // Relógio Digital
+    function updateClock() {
+      const now = new Date();
+      let h = now.getHours().toString().padStart(2, '0');
+      let m = now.getMinutes().toString().padStart(2, '0');
+      let s = now.getSeconds().toString().padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Carrossel de fotos
+    const images = document.querySelectorAll('#carousel img');
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+  </script>
+
+</body>
+</html>
